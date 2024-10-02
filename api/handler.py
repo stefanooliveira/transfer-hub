@@ -19,12 +19,12 @@ def handle_get_balance(account_id: str):
 
 def handle_deposit(destination: str, amount: float):
     if destination not in accounts:
-        accounts[destination] = Account(account_id=destination, balance=0.0)
-        logger.info(f"New account created: {destination} with initial balance 0.0.")
+        accounts[destination] = Account(account_id=destination, balance=0)
+        logger.info(f"New account created: {destination} with initial balance 0")
 
     account = accounts[destination]
     account.deposit(amount)
-    logger.info(f"Deposited {amount} to account {destination}. New balance: {account.balance}.")
+    logger.info(f"Deposited {amount} to account {destination}")
     
     return JSONResponse(content={"destination": {"id": destination, "balance": account.balance}}, status_code=201)
 
@@ -36,7 +36,7 @@ def handle_withdraw(origin: str, amount: float):
     account = accounts[origin]
     try:
         account.withdraw(amount)
-        logger.info(f"Withdrew {amount} from account {origin}. New balance: {account.balance}.")
+        logger.info(f"Withdrew {amount} from account {origin}")
     except ValueError as e:
         logger.error(f"Failed withdrawal from account {origin}: {str(e)}")
         return PlainTextResponse(content="0", status_code=404)
@@ -49,8 +49,8 @@ def handle_transfer(origin: str, destination: str, amount: float):
         return PlainTextResponse(content="0", status_code=404)
     
     if destination not in accounts:
-        accounts[destination] = Account(account_id=destination, balance=0.0)
-        logger.info(f"New account created: {destination} with initial balance 0.0.")
+        accounts[destination] = Account(account_id=destination, balance=0)
+        logger.info(f"New account created: {destination} with initial balance 0")
 
     origin_account = accounts[origin]
     destination_account = accounts[destination]
