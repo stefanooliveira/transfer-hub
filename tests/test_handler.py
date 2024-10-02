@@ -11,8 +11,7 @@ def setup_and_teardown():
 def test_handle_reset():
     response = handle_reset()
     assert response.status_code == 200
-    response_content = json.loads(response.body.decode())
-    assert response_content == "OK"
+    assert response.body.decode() == "OK"
 
 def test_handle_get_balance_non_existing():
     response = handle_get_balance("-1")

@@ -1,4 +1,4 @@
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, Response
 from loguru import logger
 from api.account import Account
 
@@ -7,7 +7,7 @@ accounts = {}
 def handle_reset():
     accounts.clear()
     logger.info("All accounts reset.")
-    return JSONResponse(content="OK", status_code=200)
+    return PlainTextResponse(content='OK',status_code=200)
 
 def handle_get_balance(account_id: str):
     if account_id not in accounts:
